@@ -86,7 +86,7 @@ class _GalleryImageState extends State<GalleryImage> {
             ),
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
-              return _isLastItem(index)
+              return isLastItem(index)
                   ? _buildImageNumbers(index)
                   : GalleryItemThumbnail(
                       galleryItem: widget.galleryItems[index],
@@ -94,7 +94,7 @@ class _GalleryImageState extends State<GalleryImage> {
                         if (widget.enableCallback) {
                           widget.onSelectImage(widget.galleryItems[index].imageUrl);
                         } else {
-                          _openImageFullScreen(index);
+                          openImageFullScreen(index);
                         }
                       },
                       loadingWidget: widget.loadingWidget,
@@ -108,7 +108,7 @@ class _GalleryImageState extends State<GalleryImage> {
   Widget _buildImageNumbers(int index) {
     return GestureDetector(
       onTap: () {
-        _openImageFullScreen(index);
+        openImageFullScreen(index);
       },
       child: Stack(
         alignment: AlignmentDirectional.center,
@@ -139,12 +139,12 @@ class _GalleryImageState extends State<GalleryImage> {
   }
 
 // Check if item is last image in grid to view image or number
-  bool _isLastItem(int index) {
+  bool isLastItem(int index) {
     return index < widget.galleryItems.length - 1 && index == widget.numOfShowImages - 1;
   }
 
 // to open gallery image in full screen
-  Future<void> _openImageFullScreen(int indexOfImage) async {
+  Future<void> openImageFullScreen(int indexOfImage) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -167,7 +167,7 @@ class _GalleryImageState extends State<GalleryImage> {
       ),
     );
   }
-
+}
 // clear and build list
   // void _buildItemsList(List<String> items) {
   //   galleryItems.clear();
@@ -177,4 +177,4 @@ class _GalleryImageState extends State<GalleryImage> {
   //     );
   //   }
   // }
-}
+
