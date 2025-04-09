@@ -40,7 +40,7 @@ class MyHomePage extends StatelessWidget {
               const Text("Tap to show image"),
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: GalleryImage(numOfShowImages: 6, galleryItems: const []),
+                child: GalleryImage(numOfShowImages: 6, galleryItems: const [], onSelectImage: (String url) {}),
               ),
             ],
           ),

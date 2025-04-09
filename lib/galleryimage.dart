@@ -1,14 +1,14 @@
-library galleryimage;
+library;
 
 import 'package:flutter/material.dart';
 
-import 'gallery_item_model.dart';
-import 'gallery_item_thumbnail.dart';
 import './gallery_image_view_wrapper.dart';
 import './util.dart';
+import 'gallery_item_model.dart';
+import 'gallery_item_thumbnail.dart';
 
 class GalleryImage extends StatefulWidget {
-  final List<GalleryItemModel> galleryItems ;
+  final List<GalleryItemModel> galleryItems;
   final String? titleGallery;
   final int numOfShowImages;
   final int crossAxisCount;
@@ -34,7 +34,7 @@ class GalleryImage extends StatefulWidget {
   final Function(String url) onSelectImage;
 
   const GalleryImage(
-      {Key? key,
+      {super.key,
       required this.galleryItems,
       this.titleGallery,
       this.childAspectRatio = 1,
@@ -58,8 +58,7 @@ class GalleryImage extends StatefulWidget {
       this.closeWhenSwipeDown = false,
       this.enableCallback = false,
       required this.onSelectImage})
-      : assert(numOfShowImages <= imageUrls.length),
-        super(key: key);
+      : assert(numOfShowImages <= galleryItems.length);
   @override
   State<GalleryImage> createState() => _GalleryImageState();
 }
@@ -73,11 +72,11 @@ class _GalleryImageState extends State<GalleryImage> {
 
   @override
   Widget build(BuildContext context) {
-    return galleryItems.isEmpty
+    return widget.galleryItems.isEmpty
         ? const EmptyWidget()
         : GridView.builder(
             primary: false,
-            itemCount: galleryItems.length > 3 ? widget.numOfShowImages : galleryItems.length,
+            itemCount: widget.galleryItems.length > 3 ? widget.numOfShowImages : widget.galleryItems.length,
             padding: widget.padding,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: widget.childAspectRatio,
@@ -90,10 +89,10 @@ class _GalleryImageState extends State<GalleryImage> {
               return _isLastItem(index)
                   ? _buildImageNumbers(index)
                   : GalleryItemThumbnail(
-                      galleryItem: galleryItems[index],
+                      galleryItem: widget.galleryItems[index],
                       onTap: () {
-                        if (enableCallback) {
-                          onSelectImage(galleryItems[index].url);
+                        if (widget.enableCallback) {
+                          widget.onSelectImage(widget.galleryItems[index].imageUrl);
                         } else {
                           _openImageFullScreen(index);
                         }
@@ -116,7 +115,7 @@ class _GalleryImageState extends State<GalleryImage> {
         fit: StackFit.expand,
         children: <Widget>[
           GalleryItemThumbnail(
-            galleryItem: galleryItems[index],
+            galleryItem: widget.galleryItems[index],
             loadingWidget: widget.loadingWidget,
             errorWidget: widget.errorWidget,
             onTap: null,
@@ -128,7 +127,7 @@ class _GalleryImageState extends State<GalleryImage> {
               color: widget.colorOfNumberWidget ?? Colors.black.withOpacity(.7),
               child: Center(
                 child: Text(
-                  "+${galleryItems.length - index}",
+                  "+${widget.galleryItems.length - index}",
                   style: widget.textStyleOfNumberWidget ?? const TextStyle(color: Colors.white, fontSize: 40),
                 ),
               ),
@@ -141,7 +140,7 @@ class _GalleryImageState extends State<GalleryImage> {
 
 // Check if item is last image in grid to view image or number
   bool _isLastItem(int index) {
-    return index < galleryItems.length - 1 && index == widget.numOfShowImages - 1;
+    return index < widget.galleryItems.length - 1 && index == widget.numOfShowImages - 1;
   }
 
 // to open gallery image in full screen
@@ -151,7 +150,7 @@ class _GalleryImageState extends State<GalleryImage> {
       MaterialPageRoute(
         builder: (context) => GalleryImageViewWrapper(
           titleGallery: widget.titleGallery,
-          galleryItems: galleryItems,
+          galleryItems: widget.galleryItems,
           backgroundColor: widget.galleryBackgroundColor,
           initialIndex: indexOfImage,
           loadingWidget: widget.loadingWidget,
@@ -170,12 +169,12 @@ class _GalleryImageState extends State<GalleryImage> {
   }
 
 // clear and build list
-  void _buildItemsList(List<String> items) {
-    galleryItems.clear();
-    for (var item in items) {
-      galleryItems.add(
-        GalleryItemModel(id: item, imageUrl: item, imageName: ,index: items.indexOf(item)),
-      );
-    }
-  }
+  // void _buildItemsList(List<String> items) {
+  //   galleryItems.clear();
+  //   for (var item in items) {
+  //     galleryItems.add(
+  //       GalleryItemModel(id: item, imageUrl: item, imageName: ,index: items.indexOf(item)),
+  //     );
+  //   }
+  // }
 }
