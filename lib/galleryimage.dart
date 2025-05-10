@@ -31,7 +31,7 @@ class GalleryImage extends StatefulWidget {
   final bool closeWhenSwipeDown;
   final bool enableCallback;
 
-  final Function(String url) onSelectImage;
+  final Function(String id, String url) onSelectImage;
 
   const GalleryImage(
       {super.key,
@@ -92,7 +92,7 @@ class _GalleryImageState extends State<GalleryImage> {
                       galleryItem: widget.galleryItems[index],
                       onTap: () {
                         if (widget.enableCallback) {
-                          widget.onSelectImage(widget.galleryItems[index].imageUrl);
+                          widget.onSelectImage(widget.galleryItems[index].id, widget.galleryItems[index].imageUrl);
                         } else {
                           openImageFullScreen(index);
                         }
