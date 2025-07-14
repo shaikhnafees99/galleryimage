@@ -19,13 +19,18 @@ class GalleryItemThumbnail extends StatelessWidget {
       onTap: onTap,
       child: Hero(
         tag: galleryItem.id,
-        child: AppCachedNetworkImage(
-          fit: BoxFit.cover,
-          imageUrl: galleryItem.imageUrl,
-          name: galleryItem.imageName,
-          loadingWidget: loadingWidget,
-          errorWidget: errorWidget,
-          radius: radius,
+        child: Column(
+          children: [
+            AppCachedNetworkImage(
+              fit: BoxFit.cover,
+              imageUrl: galleryItem.imageUrl,
+              loadingWidget: loadingWidget,
+              errorWidget: errorWidget,
+              radius: radius,
+            ),
+            Divider(),
+            Center(child: Text(galleryItem.imageName)),
+          ],
         ),
       ),
     );
