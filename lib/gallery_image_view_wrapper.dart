@@ -21,7 +21,7 @@ class GalleryImageViewWrapper extends StatefulWidget {
   final bool closeWhenSwipeDown;
 
   const GalleryImageViewWrapper({
-    Key? key,
+    super.key,
     required this.titleGallery,
     required this.backgroundColor,
     required this.initialIndex,
@@ -36,7 +36,7 @@ class GalleryImageViewWrapper extends StatefulWidget {
     required this.showAppBar,
     required this.closeWhenSwipeUp,
     required this.closeWhenSwipeDown,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -45,8 +45,7 @@ class GalleryImageViewWrapper extends StatefulWidget {
 }
 
 class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
-  late final PageController _controller =
-      PageController(initialPage: widget.initialIndex ?? 0);
+  late final PageController _controller = PageController(initialPage: widget.initialIndex ?? 0);
   int _currentPage = 0;
 
   @override
@@ -77,20 +76,17 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
       backgroundColor: widget.backgroundColor,
       body: SafeArea(
         child: Container(
-          constraints:
-              BoxConstraints.expand(height: MediaQuery.of(context).size.height),
+          constraints: BoxConstraints.expand(height: MediaQuery.of(context).size.height),
           child: Column(
             children: [
               Expanded(
                 child: GestureDetector(
                   onVerticalDragEnd: (details) {
-                    if (widget.closeWhenSwipeUp &&
-                        details.primaryVelocity! < 0) {
+                    if (widget.closeWhenSwipeUp && details.primaryVelocity! < 0) {
                       //'up'
                       Navigator.of(context).pop();
                     }
-                    if (widget.closeWhenSwipeDown &&
-                        details.primaryVelocity! > 0) {
+                    if (widget.closeWhenSwipeDown && details.primaryVelocity! > 0) {
                       // 'down'
                       Navigator.of(context).pop();
                     }
@@ -99,8 +95,7 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
                     reverse: widget.reverse,
                     controller: _controller,
                     itemCount: widget.galleryItems.length,
-                    itemBuilder: (context, index) =>
-                        _buildImage(widget.galleryItems[index]),
+                    itemBuilder: (context, index) => _buildImage(widget.galleryItems[index]),
                   ),
                 ),
               ),
@@ -110,9 +105,7 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: widget.galleryItems
-                          .map((e) => _buildLitImage(e))
-                          .toList(),
+                      children: widget.galleryItems.map((e) => _buildLitImage(e)).toList(),
                     ),
                   ),
                 ),
@@ -132,6 +125,7 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
         maxScale: widget.maxScale,
         child: Center(
           child: AppCachedNetworkImage(
+            name: item.imageName,
             imageUrl: item.imageUrl,
             loadingWidget: widget.loadingWidget,
             errorWidget: widget.errorWidget,
@@ -156,6 +150,7 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
           height: _currentPage == item.index ? 70 : 60,
           width: _currentPage == item.index ? 70 : 60,
           fit: BoxFit.cover,
+          name: item.imageName,
           imageUrl: item.imageUrl,
           errorWidget: widget.errorWidget,
           radius: widget.radius,

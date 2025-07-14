@@ -11,14 +11,7 @@ class GalleryItemThumbnail extends StatelessWidget {
   final Widget? errorWidget;
   final double radius;
 
-  const GalleryItemThumbnail(
-      {Key? key,
-      required this.galleryItem,
-      required this.onTap,
-      required this.radius,
-      required this.loadingWidget,
-      required this.errorWidget})
-      : super(key: key);
+  const GalleryItemThumbnail({super.key, required this.galleryItem, required this.onTap, required this.radius, required this.loadingWidget, required this.errorWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +22,7 @@ class GalleryItemThumbnail extends StatelessWidget {
         child: AppCachedNetworkImage(
           fit: BoxFit.cover,
           imageUrl: galleryItem.imageUrl,
+          name: galleryItem.imageName,
           loadingWidget: loadingWidget,
           errorWidget: errorWidget,
           radius: radius,
