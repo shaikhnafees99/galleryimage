@@ -125,7 +125,6 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
         maxScale: widget.maxScale,
         child: Center(
           child: AppCachedNetworkImage(
-            name: item.imageName,
             imageUrl: item.imageUrl,
             loadingWidget: widget.loadingWidget,
             errorWidget: widget.errorWidget,
@@ -150,7 +149,6 @@ class _GalleryImageViewWrapperState extends State<GalleryImageViewWrapper> {
           height: _currentPage == item.index ? 70 : 60,
           width: _currentPage == item.index ? 70 : 60,
           fit: BoxFit.cover,
-          name: item.imageName,
           imageUrl: item.imageUrl,
           errorWidget: widget.errorWidget,
           radius: widget.radius,

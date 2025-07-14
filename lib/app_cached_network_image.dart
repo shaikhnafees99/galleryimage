@@ -9,7 +9,6 @@ class AppCachedNetworkImage extends StatelessWidget {
   final BoxFit? fit;
   final double radius;
   final String imageUrl;
-  final String name;
 
   const AppCachedNetworkImage({
     super.key,
@@ -20,27 +19,20 @@ class AppCachedNetworkImage extends StatelessWidget {
     this.fit,
     this.height,
     this.width,
-    required this.name,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(radius)),
-          child: CachedNetworkImage(
-            height: height,
-            width: width,
-            fit: fit,
-            imageUrl: imageUrl,
-            placeholder: (context, url) => loadingWidget ?? const Center(child: CircularProgressIndicator()),
-            errorWidget: (context, url, error) => errorWidget ?? const Icon(Icons.error),
-          ),
-        ),
-        Divider(),
-        Center(child: Text(name)),
-      ],
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(radius)),
+      child: CachedNetworkImage(
+        height: height,
+        width: width,
+        fit: fit,
+        imageUrl: imageUrl,
+        placeholder: (context, url) => loadingWidget ?? const Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => errorWidget ?? const Icon(Icons.error),
+      ),
     );
   }
 }
